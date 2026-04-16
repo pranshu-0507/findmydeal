@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FindMyDeal — Compare prices across 500+ stores instantly. Find the best deals on electronics, fashion, home and more.">
+    <title>FindMyDeal — Compare Prices, Find Best Deals</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-card">
+            <button class="modal-close" id="modalClose" aria-label="Close login modal">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+
+            <!-- Sign In Form -->
+            <div id="signinView">
+                <div class="modal-header">
+                    <div class="modal-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <h2>Welcome back</h2>
+                    <p>Sign in to your FindMyDeal account</p>
+                </div>
+                <form id="loginForm" autocomplete="off">
+                    <div class="input-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" placeholder="you@example.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Sign in</button>
+                    <p class="modal-footer-text">Don't have an account? <a href="#" id="switchToSignup">Create one free</a></p>
+                </form>
+            </div>
+
+            <!-- Sign Up Form -->
+            <div id="signupView" style="display:none">
+                <div class="modal-header">
+                    <div class="modal-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+                    </div>
+                    <h2>Create account</h2>
+                    <p>Start saving with FindMyDeal today</p>
+                </div>
+                <form id="signupForm" autocomplete="off">
+                    <div class="input-group">
+                        <label for="signupName">Full name</label>
+                        <input type="text" id="signupName" placeholder="Jane Doe" required minlength="2">
+                    </div>
+                    <div class="input-group">
+                        <label for="signupEmail">Email</label>
+                        <input type="email" id="signupEmail" placeholder="you@example.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="signupPassword">Password</label>
+                        <input type="password" id="signupPassword" placeholder="Min 6 characters" required minlength="6">
+                    </div>
+                    <div class="input-group">
+                        <label for="signupConfirm">Confirm password</label>
+                        <input type="password" id="signupConfirm" placeholder="••••••••" required minlength="6">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Create account</button>
+                    <p class="modal-footer-text">Already have an account? <a href="#" id="switchToSignin">Sign in</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a href="#" class="logo">
+                <svg class="logo-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#logoGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <defs><linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="var(--logo-start)"/><stop offset="100%" stop-color="var(--logo-end)"/></linearGradient></defs>
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+                </svg>
+                <span class="logo-text">FindMyDeal</span>
+            </a>
+            <div class="navbar-actions">
+                <button class="btn-icon theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+                <button class="btn-icon" id="cartToggleBtn" aria-label="Open Cart" style="position: relative;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    <span id="cartBadge" class="cart-badge" style="display:none">0</span>
+                </button>
+                <!-- Logged-out state -->
+                <div id="authButtons">
+                    <button class="btn btn-ghost" id="loginBtn">Sign in</button>
+                    <button class="btn btn-primary btn-glow" id="signupBtn">Get started</button>
+                </div>
+                <!-- Logged-in state -->
+                <div id="userMenu" class="user-menu" style="display:none">
+                    <div class="user-avatar" id="userAvatar"></div>
+                    <span class="user-name" id="userName"></span>
+                    <button class="btn btn-ghost btn-sm" id="logoutBtn">Sign out</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-glow"></div>
+            <div class="hero-content anim-fade-up">
+                <h1 class="hero-title">
+                    Find the <span class="gradient-text">Best Deals</span>
+                </h1>
+                <p class="hero-subtitle">Compare prices across 500+ stores in seconds. Never overpay again.</p>
+                <div class="search-container">
+                    <div class="search-bar" id="searchBar">
+                        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        <input type="text" class="search-input" id="searchInput" placeholder="Search any product..." autocomplete="off">
+                        <button class="btn btn-primary search-btn" id="searchBtn">
+                            <span>Search</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="trust-badges">
+                    <span class="badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 500+ stores</span>
+                    <span class="badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Real-time prices</span>
+                    <span class="badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 100% free</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section (hidden by default) -->
+        <section class="results-section" id="resultsSection">
+            <div class="container">
+                <div class="results-header">
+                    <div class="results-info">
+                        <h2>Results for <span class="gradient-text" id="searchQuery"></span></h2>
+                        <p id="resultCount"></p>
+                    </div>
+                    <div class="results-controls">
+                        <select class="select-styled" id="filterSelect">
+                            <option value="default">Sort: Default</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="rating">Rating: 4+ stars</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="results-grid" id="resultsContainer"></div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="section" id="features">
+            <div class="container">
+                <div class="section-header anim-observe">
+                    <span class="section-tag">Features</span>
+                    <h2>Why teams choose FindMyDeal</h2>
+                    <p>Bring all your product price checks into one simple, powerful dashboard.</p>
+                </div>
+                <div class="features-grid">
+                    <article class="feature-card anim-observe">
+                        <div class="feature-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        </div>
+                        <h3>Real-time comparison</h3>
+                        <p>See live prices from multiple stores at once so you never overpay again.</p>
+                    </article>
+                    <article class="feature-card anim-observe">
+                        <div class="feature-icon icon-secondary">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                        </div>
+                        <h3>Smart insights</h3>
+                        <p>Get price history and savings insights to decide the perfect time to buy.</p>
+                    </article>
+                    <article class="feature-card anim-observe">
+                        <div class="feature-icon icon-tertiary">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                        </div>
+                        <h3>One-click to retailer</h3>
+                        <p>Jump directly to the best offer with clean, trackable outbound links.</p>
+                    </article>
+                    <article class="feature-card anim-observe">
+                        <div class="feature-icon icon-accent">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                        </div>
+                        <h3>Deal alerts</h3>
+                        <p>Set alerts and let FindMyDeal notify you when prices drop.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="section" id="how-it-works">
+            <div class="container">
+                <div class="section-header anim-observe">
+                    <span class="section-tag">How it works</span>
+                    <h2>From search to purchase in 3 steps</h2>
+                    <p>Designed for shoppers, creators, and teams who care about every rupee.</p>
+                </div>
+                <div class="steps-container">
+                    <div class="step-card anim-observe">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Search any product</h3>
+                            <p>Type in the product name or paste a link. We automatically match it across top retailers.</p>
+                        </div>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step-card anim-observe">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Compare prices instantly</h3>
+                            <p>See prices, shipping, and seller ratings side by side in a clean, sortable view.</p>
+                        </div>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step-card anim-observe">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Checkout with confidence</h3>
+                            <p>Click through to your chosen store and complete the purchase knowing you got the best deal.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="section" id="testimonials">
+            <div class="container">
+                <div class="section-header anim-observe">
+                    <span class="section-tag">Testimonials</span>
+                    <h2>Loved by smart shoppers</h2>
+                    <p>People already save thousands using FindMyDeal.</p>
+                </div>
+                <div class="testimonial-grid">
+                    <article class="testimonial-card anim-observe">
+                        <svg class="quote-icon" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" opacity="0.15"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                        <p class="testimonial-quote">"FindMyDeal has become my first stop before every big tech purchase. I've saved more than I expected."</p>
+                        <div class="testimonial-author-row">
+                            <div class="testimonial-avatar">RS</div>
+                            <div>
+                                <p class="testimonial-author">Rahul Sharma</p>
+                                <p class="testimonial-role">Content creator</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="testimonial-card anim-observe">
+                        <svg class="quote-icon" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" opacity="0.15"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                        <p class="testimonial-quote">"We use it as a shared shortlist for our office buys. The team finally agrees on which deal is actually best."</p>
+                        <div class="testimonial-author-row">
+                            <div class="testimonial-avatar">AD</div>
+                            <div>
+                                <p class="testimonial-author">Anita Desai</p>
+                                <p class="testimonial-role">Operations lead</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="testimonial-card anim-observe">
+                        <svg class="quote-icon" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" opacity="0.15"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                        <p class="testimonial-quote">"The alerts alone have paid for themselves multiple times. I just set and forget until the perfect price appears."</p>
+                        <div class="testimonial-author-row">
+                            <div class="testimonial-avatar">SM</div>
+                            <div>
+                                <p class="testimonial-author">Sagar Mehta</p>
+                                <p class="testimonial-role">Freelance designer</p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing CTA Section -->
+        <section class="section" id="pricing">
+            <div class="container">
+                <div class="pricing-card anim-observe">
+                    <div class="pricing-glow"></div>
+                    <div class="pricing-copy">
+                        <h2>Start for free. Upgrade when you're ready.</h2>
+                        <p>Track more products, create shared lists, and unlock advanced insights with FindMyDeal Pro.</p>
+                        <ul class="pricing-list">
+                            <li>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-secondary)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                                Track up to 20 products on the Free plan
+                            </li>
+                            <li>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-secondary)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                                Price alerts and email notifications
+                            </li>
+                            <li>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-secondary)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                                Exportable reports for teams
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pricing-details">
+                        <p class="pricing-label">Pro</p>
+                        <p class="pricing-amount">₹299<span>/month</span></p>
+                        <p class="pricing-note">No credit card required to start</p>
+                        <div class="pricing-actions">
+                            <button class="btn btn-primary btn-glow">Get started free</button>
+                            <button class="btn btn-outline">Talk to sales</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA Section -->
+        <section class="section final-cta" id="cta">
+            <div class="container">
+                <div class="final-cta-card anim-observe">
+                    <h2>Ready to find your next great deal?</h2>
+                    <p>Search a product now and see how much you could be saving.</p>
+                    <button class="btn btn-primary btn-glow btn-large" id="ctaSearchBtn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        <span>Search a product</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                <span>FindMyDeal</span>
+            </div>
+            <p class="footer-copy">© <span id="year"></span> FindMyDeal. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar Overlay -->
+    <div class="cart-overlay" id="cartOverlay">
+        <div class="cart-sidebar" id="cartSidebar">
+            <div class="cart-header">
+                <h2>Your Cart & Favorites</h2>
+                <button class="btn-icon" id="closeCartBtn" aria-label="Close Cart">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            
+            <div class="cart-content">
+                <!-- Cart Section -->
+                <div class="cart-section">
+                    <h3>Shopping Cart <span class="badge" id="cartSectionBadge">0</span></h3>
+                    <div class="cart-list" id="cartList">
+                        <div class="empty-state">Your cart is empty.</div>
+                    </div>
+                </div>
+
+                <hr class="cart-divider">
+
+                <!-- Liked Section -->
+                <div class="cart-section">
+                    <h3>Favorites <span class="badge" id="likedSectionBadge">0</span></h3>
+                    <div class="cart-list" id="likedList">
+                        <div class="empty-state">No liked items yet.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cart-footer">
+                <button class="btn btn-primary btn-full" id="checkoutBtn" disabled>Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
